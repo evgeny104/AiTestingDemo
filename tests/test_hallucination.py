@@ -19,6 +19,7 @@ def test_hallucination_legal_context():
             {"role": "system", "content": f"Отвечай только на основе этого текста закона: {context[0]}"},
             {"role": "user", "content": "Сколько дней у меня есть на возврат товара?"}
         ]
+
     )
     actual_output = response.choices[0].message.content
 
