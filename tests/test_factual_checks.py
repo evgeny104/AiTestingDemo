@@ -18,15 +18,17 @@ def model_answer():
         temperature=0,
         messages=[
             {"role": "system", "content": f"Отвечай только на основе этого текста закона: {CONTEXT}. "
-                                          f"В ответе обязательно указывай номер стать"},
+                                          f"В ответе обязательно указывай номер статьи в формате 'Статья 15'."},
             {"role": "user","content": QUESTION},
         ]
     )
     print(response.choices[0].message.content)
     return response.choices[0].message.content
 
-
-
-def test_answer_cites_article(model_answer):
-    assert re.search(r"стать\w*\s*15", model_answer,
-                     re.IGNORECASE), f"В ответе нет упоминания 'Статья 15'. Ответ: {model_answer!r}"
+@pytest.mark.parametrize("pattern, description", [
+    (r"(?i)стать\w*\s*15", "цитата статьи"),
+    (r"\b14\b", "число дней 14"),
+    (r"(?i)возврат|верн\w*|возвращ\w*", "слово 'возврат'")
+])
+def test_answer_matches_pattern(model_answer, pattern, description):
+    assert re.search(pattern, model_answer), f"В ответе не найдено: {description} . Ответ: {model_answer!r}"
