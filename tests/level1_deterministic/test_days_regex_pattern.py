@@ -1,5 +1,12 @@
+"""Уровень 1: учебная параметризация regex в чистом виде.
+
+Не зовёт Groq. Проверяет, что шаблон `\\b14\\b` совпадает
+только с изолированным числом 14 и не ловит "140" или "2014".
+"""
 import re
 import pytest
+
+pytestmark = pytest.mark.deterministic
 
 
 @pytest.mark.parametrize("text, should_match", [

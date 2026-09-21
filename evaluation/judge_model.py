@@ -1,3 +1,9 @@
+"""Инфраструктура уровня 3: судья-модель для DeepEval-метрик.
+
+Оборачивает Groq в интерфейс DeepEvalBaseLLM + instructor в JSON-режиме
+(tool-calling ломается на openai/gpt-oss-20b).
+Используется только LLM-judge тестами: test_answer_relevancy, test_hallucination.
+"""
 import os
 from dotenv import load_dotenv
 from openai import OpenAI

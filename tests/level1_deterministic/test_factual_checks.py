@@ -1,6 +1,14 @@
+"""Уровень 1: детерминированные проверки на ОДНОМ захардкоженном кейсе.
+
+Один вызов Groq в фикстуре module-scope → несколько regex-шаблонов
+через parametrize. Учебная база: temperature=0 для воспроизводимости,
+system-промпт с директивой формата цитаты.
+"""
 import re
 import pytest
 from clients.groq_client import client
+
+pytestmark = pytest.mark.deterministic
 
 QUESTION = "Сколько дней у меня есть на возврат товара?"
 CONTEXT = (
